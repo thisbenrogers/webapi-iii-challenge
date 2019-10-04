@@ -34,12 +34,14 @@ router.put('/:id', (req, res) => {
 
 function validateUserId(req, res, next) {
   const id = req.params.id;
-  if (id) {
-    req.user = res.body;
-  } else {
+  const body = req.body;
+  if (id !== body.id) {
     res.status(400).json({
       message: "invalid user id"
     });
+  } else {
+    req.user = res.body;
+    next();
   };
 };
 
